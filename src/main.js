@@ -1,4 +1,4 @@
-import './styles/style.css'
+import './styles/style.css';
 import * as THREE from 'three';
 import * as CANNON from 'cannon';
 import { generateBox, cutBox } from './box';
@@ -78,7 +78,6 @@ function init() {
   camera.position.set(4, 4, 4);
   camera.lookAt(0, 0, 0);
 
-
   scene = new THREE.Scene();
 
   // Base
@@ -107,11 +106,13 @@ function init() {
   // Esta parte es la que es capaz de renderizar la imagen en un canvas de HTML
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0xe4a679);
   renderer.setAnimationLoop(animation);
   document.body.appendChild(renderer.domElement);
 }
 
 function startGame() {
+  //currentSphere = null;
   autopilot = false;
   gameEnded = false;
   lastTime = 0;
@@ -160,7 +161,17 @@ function addLayer(x, z, width, depth, direction) {
 
 function addOverhang(x, z, width, depth) {
   const y = boxHeight * (stack.length - 1); // Añade la nueva caja a la misma capa
-  const overhang = generateBox(x, y, z, width, depth, true, stack, scene, world);
+  const overhang = generateBox(
+    x,
+    y,
+    z,
+    width,
+    depth,
+    true,
+    stack,
+    scene,
+    world
+  );
   overhangs.push(overhang);
 }
 
@@ -201,7 +212,7 @@ function splitBlockAndAddNextOneIfOverlaps() {
   const overlap = size - overhangSize;
 
   if (overlap > 0) {
-    cutBox(topLayer, overlap, size, delta);
+    cutBox(topLayer, overlap, size, delta, world, scene, stack);
 
     // Sobresaliente
     const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta);

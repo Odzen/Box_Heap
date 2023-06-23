@@ -1,10 +1,9 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon';
-
+import { generateSphere } from './sphere';
 
 const boxHeight = 1; // Altura de cada capa
 const originalBoxSize = 3; // Ancho y alto originales de una caja
-
 function generateBox(x, y, z, width, depth, falls, stack, scene, world) {
   // ThreeJS
 
@@ -43,7 +42,7 @@ function generateBox(x, y, z, width, depth, falls, stack, scene, world) {
   };
 }
 
-function cutBox(topLayer, overlap, size, delta) {
+function cutBox(topLayer, overlap, size, delta, world, scene, stack) {
   const direction = topLayer.direction;
   const newWidth = direction == 'x' ? overlap : topLayer.width;
   const newDepth = direction == 'z' ? overlap : topLayer.depth;
@@ -65,6 +64,18 @@ function cutBox(topLayer, overlap, size, delta) {
   );
   topLayer.cannonjs.shapes = [];
   topLayer.cannonjs.addShape(shape);
+
+  const sphereRadius = Math.min(newWidth, newDepth) / 4;
+  generateSphere(
+    topLayer.threejs.position.x - 5,
+    topLayer.threejs.position.y + boxHeight + sphereRadius,
+    topLayer.threejs.position.z + 2,
+    sphereRadius,
+    true,
+    world,
+    scene,
+    stack
+  );
 }
 
 // function addLayer(x, z, width, depth, direction, stack, scene, world) {
@@ -80,7 +91,4 @@ function cutBox(topLayer, overlap, size, delta) {
 //   overhangs.push(overhang);
 // }
 
-export {
-  generateBox,
-  cutBox                    
-}
+export { generateBox, cutBox };
