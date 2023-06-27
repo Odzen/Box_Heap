@@ -38,13 +38,16 @@
       border-radius: 20px;
     }
 
-    #results {}
-
-    #score {
+    .labels {
+      display: flex;
       position: absolute;
+      flex-direction: column;
+      top: 30px;
+      right: 30px;
+    }
+
+    #label {
       color: white;
       font-size: 3em;
       font-weight: bold;
-      top: 30px;
-      right: 30px;
     }

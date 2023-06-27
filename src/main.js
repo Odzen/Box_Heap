@@ -13,11 +13,13 @@ let overhangs; // Partes sobresalientes que caen
 let autopilot;
 let gameEnded;
 let robotPrecision; // Determina cuán precisa es el juego en piloto automático
+let speed = 0.008;
 
 const boxHeight = 1; // Altura de cada capa
 const originalBoxSize = 3; // Ancho y alto originales de una caja
 
 const scoreElement = document.getElementById('score');
+const levelElement = document.getElementById('level');
 const instructionsElement = document.getElementById('instructions');
 const resultsElement = document.getElementById('results');
 
@@ -116,12 +118,15 @@ function startGame() {
   autopilot = false;
   gameEnded = false;
   lastTime = 0;
+  speed = 0.008;
   stack = [];
   overhangs = [];
 
   if (instructionsElement) instructionsElement.style.display = 'none';
   if (resultsElement) resultsElement.style.display = 'none';
   if (scoreElement) scoreElement.innerText = 0;
+  if (levelElement) levelElement.innerText = 1;
+
 
   if (world) {
     // Elimina cada objeto del mundo
@@ -236,7 +241,14 @@ function splitBlockAndAddNextOneIfOverlaps() {
     const newDepth = topLayer.depth; // La nueva capa tiene el mismo tamaño que la capa superior cortada
     const nextDirection = direction == 'x' ? 'z' : 'x';
 
+
     if (scoreElement) scoreElement.innerText = stack.length - 1;
+
+    if (levelElement &&( stack.length - 1) % 10 === 0) {
+      speed += 0.001;
+      levelElement.innerText =  parseInt(levelElement.innerText) + 1;
+    } 
+    
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
   } else {
     missedTheSpot();
@@ -261,9 +273,9 @@ function missedTheSpot() {
 }
 
 function animation(time) {
+  
   if (lastTime) {
     const timePassed = time - lastTime;
-    const speed = 0.008;
 
     const topLayer = stack[stack.length - 1];
     const previousLayer = stack[stack.length - 2];
