@@ -17,7 +17,7 @@ function generateBox(x, y, z, width, depth, falls, stack, scene, world) {
   // El valor de Hue o matiz es un número entre 0 y 360, que representa un color en el círculo cromático
   // Nosotros empezamos con un color azul, y luego cambiamos el matiz para cada caja en 4 grados
   // De esta forma, a medida que se apilan las cajas, el color cambia gradualmente a azul-morado-rojo
-  const color = new THREE.Color(`hsl(${166 + stack.length * 4}, 100%, 50%)`);
+  const color = new THREE.Color(`hsl(${180 + stack.length * 4}, 100%, 50%)`);
   const material = new THREE.MeshLambertMaterial({ color });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);
@@ -40,6 +40,18 @@ function generateBox(x, y, z, width, depth, falls, stack, scene, world) {
     width,
     depth,
   };
+}
+
+function generarNumeroAleatorio() {
+  // Generamos un número aleatorio entre 0 y 1
+  var numero = Math.random();
+
+  // Si el número es mayor o igual a 0.5, devolvemos 6. Si no, devolvemos -5.
+  if (numero >= 0.5) {
+    return 6;
+  } else {
+    return -5;
+  }
 }
 
 function cutBox(topLayer, overlap, size, delta, world, scene, stack) {
@@ -67,9 +79,9 @@ function cutBox(topLayer, overlap, size, delta, world, scene, stack) {
 
   const sphereRadius = Math.min(newWidth, newDepth) / 4;
   generateSphere(
-    topLayer.threejs.position.x - 5,
+    generarNumeroAleatorio(),
     topLayer.threejs.position.y + boxHeight + sphereRadius,
-    topLayer.threejs.position.z + 2,
+    2,
     sphereRadius,
     true,
     world,

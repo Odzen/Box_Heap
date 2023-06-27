@@ -13,7 +13,7 @@ function generateSphere(x, y, z, radius, falls, world, scene, stack) {
   const material = new THREE.MeshLambertMaterial({
     color,
     emissive: emissiveColor,
-    emissiveIntensity: 0.5,
+    emissiveIntensity: 1,
   });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);

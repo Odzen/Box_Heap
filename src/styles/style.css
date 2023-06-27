@@ -1,53 +1,73 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
-    body {
-      margin: 0;
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      cursor: pointer;
-    }
+body {
+  margin: 0;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+}
 
-    #instructions {
-      display: none;
-    }
+#instructions {
+  display: none;
+}
 
-    #results,
-    body:hover #instructions {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(20, 20, 20, 0.75);
-    }
+#results,
+body:hover #instructions {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(20, 20, 20, 0.75);
+}
 
-    a:visited {
-      color: inherit;
-    }
+a:visited {
+  color: inherit;
+}
 
-    #results {
-      display: none;
-      cursor: default;
-    }
+#results {
+  display: none;
+  cursor: default;
+}
 
-    #results .content,
-    #instructions .content {
-      max-width: 300px;
-      padding: 50px;
-      border-radius: 20px;
-    }
+#results .content,
+#instructions .content {
+  max-width: 300px;
+  padding: 50px;
+  border-radius: 20px;
+}
 
-    .labels {
-      display: flex;
-      position: absolute;
-      flex-direction: column;
-      top: 30px;
-      right: 30px;
-    }
+/*
+.labels {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 30px;
+  right: 30px;
+}*/
 
-    #label {
-      color: white;
-      font-size: 3em;
-      font-weight: bold;
-    }
+.labels {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
+/*
+#label {
+  color: white;
+  font-size: 3em;
+  font-weight: bold;
+}*/
+
+@font-face {
+  font-family: 'Adore64';
+  src: url('Adore64.ttf') format('truetype');
+}
+
+#label {
+  color: white;
+  font-family: 'Adore64', Arial, sans-serif;
+}

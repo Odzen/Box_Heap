@@ -38,6 +38,10 @@ function init() {
   overhangs = [];
   setRobotPrecision();
 
+  let username = prompt('Por favor ingresa tu nombre');
+  const usernameElement = document.getElementById('username');
+  usernameElement.innerText = username;
+
   // Inicializa CannonJS
   world = new CANNON.World();
   world.gravity.set(0, -10, 0); // La gravedad tira las cosas hacia abajo
@@ -115,6 +119,7 @@ function init() {
 
 function startGame() {
   //currentSphere = null;
+
   autopilot = false;
   gameEnded = false;
   lastTime = 0;
@@ -126,7 +131,6 @@ function startGame() {
   if (resultsElement) resultsElement.style.display = 'none';
   if (scoreElement) scoreElement.innerText = 0;
   if (levelElement) levelElement.innerText = 1;
-
 
   if (world) {
     // Elimina cada objeto del mundo
@@ -241,14 +245,13 @@ function splitBlockAndAddNextOneIfOverlaps() {
     const newDepth = topLayer.depth; // La nueva capa tiene el mismo tamaño que la capa superior cortada
     const nextDirection = direction == 'x' ? 'z' : 'x';
 
-
     if (scoreElement) scoreElement.innerText = stack.length - 1;
 
-    if (levelElement &&( stack.length - 1) % 10 === 0) {
+    if (levelElement && (stack.length - 1) % 10 === 0) {
       speed += 0.001;
-      levelElement.innerText =  parseInt(levelElement.innerText) + 1;
-    } 
-    
+      levelElement.innerText = parseInt(levelElement.innerText) + 1;
+    }
+
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
   } else {
     missedTheSpot();
@@ -273,7 +276,6 @@ function missedTheSpot() {
 }
 
 function animation(time) {
-  
   if (lastTime) {
     const timePassed = time - lastTime;
 
