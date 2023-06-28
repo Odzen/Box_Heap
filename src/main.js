@@ -14,7 +14,7 @@ let autopilot;
 let gameEnded;
 let robotPrecision; // Determina cuán precisa es el juego en piloto automático
 let speed = 0.008;
-
+let username = '';
 const boxHeight = 1; // Altura de cada capa
 const originalBoxSize = 3; // Ancho y alto originales de una caja
 
@@ -23,7 +23,7 @@ const levelElement = document.getElementById('level');
 const instructionsElement = document.getElementById('instructions');
 const resultsElement = document.getElementById('results');
 
-init();
+//init();
 
 // Determina cuán precisa es el juego en piloto automático
 function setRobotPrecision() {
@@ -37,10 +37,6 @@ function init() {
   stack = [];
   overhangs = [];
   setRobotPrecision();
-
-  let username = prompt('Por favor ingresa tu nombre');
-  const usernameElement = document.getElementById('username');
-  usernameElement.innerText = username;
 
   // Inicializa CannonJS
   world = new CANNON.World();
@@ -86,6 +82,33 @@ function init() {
 
   scene = new THREE.Scene();
 
+  // Crear el piso
+  const floorGeometry = new THREE.PlaneGeometry(10, 20);
+  const floorMaterial = new THREE.MeshBasicMaterial({ color: 0xd2b48c }); //
+  const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  floor.rotation.x = Math.PI / -2; // Rotar el piso 90 grados para que quede horizontal
+  scene.add(floor);
+
+  // Crear la pared
+  const wallGeometry = new THREE.PlaneGeometry(10, 10);
+  const wallMaterial = new THREE.MeshBasicMaterial({ color: 0xa0522d }); //
+  const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+  wall.position.y = 5; // Mover la pared hacia arriba
+  wall.position.z = -5; // Mover la pared hacia atrás
+  scene.add(wall);
+
+  const wallGeometry2 = new THREE.PlaneGeometry(10, 10);
+  const wallMaterial2 = new THREE.MeshBasicMaterial({ color: 0xbc8f8f }); //
+  const wall2 = new THREE.Mesh(wallGeometry2, wallMaterial2);
+  wall2.rotation.y = Math.PI / 2; // Girar la pared 90 grados
+  wall2.position.z = -5; // Mover la pared hacia atrás
+  wall2.position.x = -10; // Mover la pared a la derecha
+  scene.add(wall2);
+
+  floor.userData.isEnvironment = true;
+  wall.userData.isEnvironment = true;
+  wall2.userData.isEnvironment = true;
+
   // Base
   addLayer(0, 0, originalBoxSize, originalBoxSize);
 
@@ -94,7 +117,7 @@ function init() {
 
   // Configuración de luces
   // Luz de ambiente que ilumina desde todas las direcciones
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  const ambientLight = new THREE.AmbientLight(0x303030, 0.3); // Luz de ambiente oscura
   scene.add(ambientLight);
 
   // La luz direccional tiene un posición que sirve como una dirección, funciona como el sol
@@ -104,7 +127,7 @@ function init() {
   // El parametro X tiene un valor menor que el Y, lo que indica que el lado derecho de las cajas también recibirán luz, pero menos que el top
   // El parametro Z tiene un valor de 0, lo que indicaría que el lado frontal de las cajas no recibirán luz
   // Si no hubiese luz de ambiente, el lado frontal de las cajas no se mostraría, estaría completamente negro
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+  const dirLight = new THREE.DirectionalLight(0x606060, 0.6); // Luz direccional oscura
   dirLight.position.set(10, 20, 0);
   scene.add(dirLight);
 
@@ -112,7 +135,7 @@ function init() {
   // Esta parte es la que es capaz de renderizar la imagen en un canvas de HTML
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0xe4a679);
+  renderer.setClearColor(0xadd8e6);
   renderer.setAnimationLoop(animation);
   document.body.appendChild(renderer.domElement);
 }
@@ -141,8 +164,12 @@ function startGame() {
 
   if (scene) {
     // Elimina cada malla de la escena
-    while (scene.children.find((c) => c.type == 'Mesh')) {
-      const mesh = scene.children.find((c) => c.type == 'Mesh');
+    while (
+      scene.children.find((c) => c.type == 'Mesh' && !c.userData.isEnvironment)
+    ) {
+      const mesh = scene.children.find(
+        (c) => c.type == 'Mesh' && !c.userData.isEnvironment
+      );
       scene.remove(mesh);
     }
 
@@ -194,7 +221,7 @@ window.addEventListener('keydown', function (event) {
   }
   if (event.key == 'R' || event.key == 'r') {
     event.preventDefault();
-    startGame();
+    location.reload();
     return;
   }
 });
@@ -207,6 +234,12 @@ function eventHandler() {
 // Función que se llama en cada click o cuando se hace press en la tecla espacio
 function splitBlockAndAddNextOneIfOverlaps() {
   if (gameEnded) return;
+
+  if (username === null || username === '') {
+    username = prompt('Por favor ingresa tu nombre');
+    const usernameElement = document.getElementById('username');
+    usernameElement.innerText = username;
+  }
 
   const topLayer = stack[stack.length - 1];
   const previousLayer = stack[stack.length - 2];
@@ -345,4 +378,8 @@ window.addEventListener('resize', () => {
   // Reiniciar renderizador
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.render(scene, camera);
+});
+
+window.addEventListener('load', (event) => {
+  init();
 });

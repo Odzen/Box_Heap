@@ -12,7 +12,7 @@ body {
 }
 
 #results,
-body:hover #instructions {
+#instructions {
   position: absolute;
   display: flex;
   align-items: center;

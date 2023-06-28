@@ -19,7 +19,7 @@ function generateSphere(x, y, z, radius, falls, world, scene, stack) {
   mesh.position.set(x, y, z);
   scene.add(mesh);
 
-  const light = new THREE.PointLight(color, 2, 100); // Color igual al de la esfera, intensidad 2, distancia 100
+  const light = new THREE.PointLight(color, 2, 15); // Color igual al de la esfera, intensidad 2, distancia 100
   light.position.set(x, y, z);
   scene.add(light);
 
