@@ -1,39 +1,36 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/stack.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de Bloques en Torre</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/stack.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juego de Bloques en Torre</title>
-</head>
-
-<body>
-  <div id="instructions">
-    <div class="content">
-      <p>Apila los bloques uno encima del otro</p>
-      <p>
-        Haz clic, toca o presiona Espacio cuando un bloque esté sobre la pila.
-        ¿Puedes alcanzar los bloques de color azul?
-      </p>
-      <p>Haz clic, toca o presiona Espacio para iniciar el juego</p>
+  <body>
+    <div id="instructions">
+      <div class="content" id="label">
+        <p>Apila los bloques uno encima del otro</p>
+        <p>
+          Haz clic o presiona Espacio cuando un bloque se encuentre sobre la
+          pila.
+        </p>
+        <p>Haz clic o presiona Espacio para iniciar el juego</p>
+      </div>
     </div>
-  </div>
-  <div id="results">
-    <div class="content">
-      <p>Te pasaste el bloque</p>
-      <p>Para reiniciar el juego presiona R</p>
+    <div id="results">
+      <div class="content" id="label">
+        <p>Te pasaste el bloque</p>
+        <p>Para reiniciar el juego presiona R</p>
+      </div>
     </div>
-  </div>
-  <div class="labels">
-    <div id="label">Score: <span id="score">0</span></div>
-    <div id="label">Level: <span id="level">1</span></div>
-  </div>
+    <div class="labels">
+      <div id="label">Name: <span id="username"></span></div>
+      <div id="label">Score: <span id="score">0</span></div>
+      <div id="label">Level: <span id="level">1</span></div>
+    </div>
 
-  <div id="app"></div>
-  <script type="module" src="./src/main.js"></script>
-
-
-</body>
-
+    <div id="app"></div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
 </html>
