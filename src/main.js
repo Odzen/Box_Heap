@@ -105,9 +105,26 @@ function init() {
   wall2.position.x = -10; // Mover la pared a la derecha
   scene.add(wall2);
 
+  const wallGeometry3 = new THREE.PlaneGeometry(16, 10);
+  const wallMaterial3 = new THREE.MeshBasicMaterial({ color: 0x006600 }); //
+  const wall3 = new THREE.Mesh(wallGeometry3, wallMaterial3);
+  wall3.position.y = 5; // Mover la pared hacia arriba
+  wall3.position.z = -8; // Mover la pared hacia atrás
+  scene.add(wall3);
+
+  const wallGeometry4 = new THREE.PlaneGeometry(16, 10);
+  const wallMaterial4 = new THREE.MeshBasicMaterial({ color: 0x001a00 }); //
+  const wall4 = new THREE.Mesh(wallGeometry4, wallMaterial4);
+  wall4.rotation.y = Math.PI / 2; // Girar la pared 90 grados
+  wall4.position.z = -5; // Mover la pared hacia atrás
+  wall4.position.x = -13; // Mover la pared a la derecha
+  scene.add(wall4);
+
   floor.userData.isEnvironment = true;
   wall.userData.isEnvironment = true;
   wall2.userData.isEnvironment = true;
+  wall3.userData.isEnvironment = true;
+  wall4.userData.isEnvironment = true;
 
   // Base
   addLayer(0, 0, originalBoxSize, originalBoxSize);
